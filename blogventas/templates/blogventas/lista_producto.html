@@ -1,0 +1,42 @@
+{% extends 'blogventas/base.html' %}
+{% block titulo %}
+<title>Inicio</title>
+{% endblock %}
+{% block content %}
+<style>
+    .tits {
+        color: #70198A;
+        font-family: 'Kaushan Script', cursive;
+        text-align: center;
+    }
+
+    .encapub {
+        font-family: 'Lobster', cursive;
+    }
+
+</style>
+<h1 class="tits">Recetas de cocina</h1>
+        <h3>{{user.username}}</h3>
+
+
+        <div class="row well">
+            {% for post in posts %}
+            <div class="col-md-4 well">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                    <h3 class="panel-title encapub"><a href="{% url 'detalle' pk=post.pk%}">{{ post.marca }} - {{ post.modelo }} </a></h3>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle; text-align:center;">
+                        <a href="{% url 'detalle' pk=post.pk%}">
+                            <img src='{{post.imagen.url}}' class="img-responsive" style='width:362px;height:300px'/>
+                        </a>
+                    </div>
+                    <div class="panel-footer">
+                        <p>Precio: Q. {{ post.precio }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+{% endblock %}

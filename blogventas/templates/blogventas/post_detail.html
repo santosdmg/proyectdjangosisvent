@@ -1,0 +1,21 @@
+{% extends 'blogventas/base.html' %}
+{% block content %}
+<style>
+  .cuerpo{
+    font-family: 'Indie Flower', cursive;
+  }
+  p{font-size: 20px;}
+</style>
+<div class="post cuerpo">
+  <div class="row">
+    <div class="col-md-7">
+      <h1>{{ post.marca }} - {{post.modelo}}</h1>
+      <p>{{ post.caracteristicas|linebreaksbr }}</p>
+    </div>
+    <div class="col-md-5">
+      <img src='{{post.imagen.url}}' class="img-responsive" style='width:362px;height:300px'/>
+      <h3>Q. {{ post.precio}}</h3>
+    </div>
+  </div>
+</div>
+{% endblock %}

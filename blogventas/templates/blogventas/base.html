@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Covered+By+Your+Grace|Kaushan+Script" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        {% block titulo %}
+
+        {% endblock %}
+
+        <style>
+
+            li a {
+                font-size: 25px;
+                font-family: 'Covered By Your Grace', cursive;
+            }
+           .dropdown{
+
+                font-family: 'Covered By Your Grace', cursive;
+
+            }
+            .dropdown-header {
+                font-size: 20px;
+            }
+            body {
+                background-color: #F5F9EE;
+            }
+            .headnav{
+              background: #4d5063;
+              padding: 10px;
+              border-radius: 15px;
+
+            }
+            .headnav a{
+              color: #ffffff;
+            }
+            .headnav a:hover {
+              color: #4d5063;
+              background:#ffffff }
+
+        </style>
+    </head>
+    <body>
+
+        <div class = "headnav"  >
+            <ul class="nav nav-pills">
+              <div class="col-md-1">
+                <li >
+                    <a class="btn" style="font-size: 25px;" href="{%url 'inicio'%}"><span class="glyphicon glyphicon-home"></span> Inicio</a>
+                </li>
+              </div>
+              
+
+            </ul>
+
+        </div>
+         <div class="content container">
+            <div class="row">
+                <div class="col-md-12">
+                {% block content %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+</html>

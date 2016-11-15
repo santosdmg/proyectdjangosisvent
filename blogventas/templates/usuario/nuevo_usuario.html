@@ -1,0 +1,128 @@
+{% extends 'blogventas/base.html'%}
+{% block titulo %}
+<title>Registrar usuario</title>
+{% endblock %}
+<h1>Registrar Usuario</h1>
+
+{% block content %}
+<style>
+ .encform{
+   border-radius: 8px;
+   background: #4d5063;
+   color: #ffffff;
+   padding: 10px;
+   text-align: center;
+   font-family: 'Kaushan Script', cursive;
+ }
+ .cuerpofield{
+   font-family: 'Indie Flower', cursive;
+   background: #ffffff;
+ }
+ .btndv{
+
+   background: #ffffff;
+   padding-bottom: 20px;
+ }
+ .btnreg{
+   background: #4d5063;
+   color: #ffffff;
+   font-family: 'Kaushan Script', cursive;
+   font-size: 25px;
+   border-radius: 15px;
+ }
+ h1 {
+   font-family: 'Kaushan Script', cursive;
+ }
+ .h1text{
+   text-align: center;
+ }
+ .form-group{
+   padding-left: 20px;
+ }
+</style>
+<div class="col-md-12">
+  <div>
+    <h1 class="h1text">Registro de usuario</h1>
+  </div>
+<form method="POST">
+
+    {% csrf_token %}
+    <div class="col-md-6">
+    <fieldset class="cuerpofield">
+      <legend class="encform">Datos de usuario</legend>
+      <div class="form-group">
+        <label for="ejemplo_email_1">Usuario</label><br/>
+        {{ formulario.username}}
+        <p class="help-block">30 caracteres o menos, puede incluir carateres especiales.</p>
+      </div>
+      <div class="form-group">
+        <label for="ejemplo_email_1">Contraseña</label>
+        {{ formulario.password1}}
+        <br/>
+        <label for="ejemplo_email_1">Repita contraseña</label>
+        {{ formulario.password2}}
+        <p class="help-block">Escriba otra vez la contraseña de arriba.</p>
+      </div>
+
+    </fieldset>
+    </div>
+    <div class="col-md-6">
+    <fieldset class="cuerpofield">
+      <legend class="encform">Datos Personales</legend>
+      <div class="form-group">
+        <label for="ejemplo_email_1">Nombre</label><br/>
+        {{ formulario.first_name}}
+      </div>
+      <div class="form-group">
+        <label for="ejemplo_email_1">Apellido</label><br/>
+        {{ formulario.last_name}}
+      </div>
+      <div class="form-group">
+        <label for="ejemplo_email_1">Correo electronico</label><br/>
+        {{ formulario.email}}
+      </div>
+    </fieldset>
+    </div>
+    <div class="row col-md-12">
+
+    <fieldset class="cuerpofield">
+      <legend class="encform">Permisos</legend>
+        <div class="form-group">
+          {{ formulario.is_active}}
+        <label for="ejemplo_email_1">  Activo</label>
+        <p class="help-block">Indica si el usuario debe ser tratado como activo. Desmarque esta opción en lugar de borrar la cuenta.</p>
+      </div>
+      <div class="form-group">
+          {{ formulario.is_staff}}
+        <label for="ejemplo_email_1">  Es staff</label>
+        <p class="help-block">Indica si el usuario puede entrar en el sitio de administración.</p>
+
+      </div>
+      <div class="form-group">
+          {{ formulario.is_superuser}}
+        <label for="ejemplo_email_1">  Es superusuario</label>
+        <p class="help-block">Indica que este usuario tiene todos los permisos sin asignárselos explícitamente.</p>
+
+      </div>
+      <div class="form-group">
+          <label for="ejemplo_email_1">  Asignacion de permisos</label>
+          <br/>
+          <br/>
+          <div style="background : transparent;overflow : auto;width : auto; height : 200px;">
+            {{ formulario.user_permissions}}
+
+
+          </div>
+
+            <p class="help-block">Seleccione los permisos del usuario</p>
+
+   </div>
+ </fieldset>
+</div>
+   <div class="form-group btndv">
+     <input class="btnreg" type="submit"  value="Registrar">
+   </div>
+
+</form>
+</div>
+{% endblock %}

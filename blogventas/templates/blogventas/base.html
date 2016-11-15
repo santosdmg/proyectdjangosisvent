@@ -57,7 +57,49 @@
                     <a class="btn" style="font-size: 25px;" href="{%url 'inicio'%}"><span class="glyphicon glyphicon-home"></span> Inicio</a>
                 </li>
               </div>
-              
+              {% if user.is_authenticated %}
+              <div class="col-md-2">
+                <li >
+                    <a class="btn" style="font-size: 25px;" href="{%url 'prodN'%}"><span class="glyphicon glyphicon-plus"></span>  Producto Nuevo</a>
+                </li>
+              </div>
+              <div class="col-md-2">
+                <li >
+                    <a class="btn" style="font-size: 25px;" href="{%url 'crear_Us'%}">Registrar usuario</a>
+                </li>
+              </div>
+              <div class="col-md-1">
+               <li>
+                   <div class="dropdown">
+                       <a class="btn  dropdown-toggle" style="font-size: 25px;" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{user.username}}
+                          <span class="caret"></span></a>
+                       <ul class="dropdown-menu">
+                           <li><a href="{%url 'logout_Us'%}">Cerrar Sesión</a></li>
+
+                       </ul>
+                   </div>
+                </li>
+              </div>
+              {% else %}
+
+
+
+
+              <div class="col-md-1">
+               <li>
+                   <div class="dropdown">
+                       <a class="btn  dropdown-toggle" style="font-size: 25px;" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Usuario
+                           <span class="caret"></span></a>
+                       <ul class="dropdown-menu">
+                           <li><a href="{%url 'login_Us'%}">Iniciar Sesión</a></li>
+
+                       </ul>
+                   </div>
+                </li>
+              </div>
+
+              {% endif %}
+
 
             </ul>
 

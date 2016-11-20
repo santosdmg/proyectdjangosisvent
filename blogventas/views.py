@@ -94,8 +94,26 @@ def lista_producto(request):
     posts = Producto.objects.all
     return render(request, 'blogventas/lista_producto.html',{'posts': posts})
 
+#lista general de productos
+def lista_gen_producto(request):
+    posts = Producto.objects.all
+    return render(request, 'blogventas/productos.html',{'posts': posts})
+
 
 #detalle de cada post
 def post_detail (request, pk):
     post = get_object_or_404(Producto, pk=pk)
     return render(request, 'blogventas/post_detail.html', {'post': post})
+
+#editar compu
+def post_edit(request, pk):
+    post = get_object_or_404(Producto, pk=pk)
+    if request.method == "POST":
+        form = ProductoN(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('blogventas.views.post_detail', pk=post.pk)
+    else:
+        form = ProductoN(instance=post)
+    return render(request, 'blogventas/post_edit.html', {'form': form})

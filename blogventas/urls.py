@@ -4,7 +4,9 @@ from django.conf.urls.static import static
 from . import views
 urlpatterns = [
     url(r'^$', views.lista_producto, name='inicio'),
+    url(r'^lista/productos$', views.lista_gen_producto, name='lista_productos'),
     url(r'^post/(?P<pk>[0-9]+)/$', views.post_detail, name='detalle'),
+    url(r'^post/(?P<pk>[0-9]+)/editar/$', views.post_edit, name='post_editar'),
     url(r'^Produto/nuevo/$', views.nuevo_producto, name='prodN'),
     url(r'^Marca/nuevo/$', views.nueva_marca, name='marcaN'),
     url(r'^usuario/nuevo/$', views.nuevo_usuario, name='crear_Us'),

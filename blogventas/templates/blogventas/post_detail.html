@@ -1,4 +1,5 @@
-{% extends 'blogventas/base.html' %}
+{% extends 'blogventas/base2.html' %}
+  {% block titulopagina %}<h2 class="section-title">Detalle del Producto</h2>{% endblock %}
 {% block content %}
 <style>
   .cuerpo{
@@ -6,16 +7,24 @@
   }
   p{font-size: 20px;}
 </style>
+
 <div class="post cuerpo">
+
   <div class="row">
+    <div class="col-md-5">
+      <img src='{{post.imagen.url}}' class="img-responsive" style='width:362px;height:300px'/>
+      <div class="product-carousel-price">
+                          <ins>Q. {{ post.precio}}<a class="btn" style="font-size: 25px;" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a></ins>
+                        </div>
+      
+      <a class="btn" style="font-size: 25px;" href="{%url 'post_editar' pk=post.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+    </div>
     <div class="col-md-7">
       <h1>{{ post.marca }} - {{post.modelo}}</h1>
       <p>{{ post.caracteristicas|linebreaksbr }}</p>
     </div>
-    <div class="col-md-5">
-      <img src='{{post.imagen.url}}' class="img-responsive" style='width:362px;height:300px'/>
-      <h3>Q. {{ post.precio}}</h3>
-    </div>
+
   </div>
 </div>
 {% endblock %}

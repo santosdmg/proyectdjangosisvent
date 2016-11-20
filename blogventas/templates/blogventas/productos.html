@@ -1,0 +1,49 @@
+{% extends 'blogventas/base2.html' %}
+{% block titulo %}
+<title>Lista de productos</title>
+{% endblock %}
+{% block titulopagina %}<h2 class="section-title">Lista de productos</h2>{% endblock %}
+{% block content %}
+<style type="text/css">
+	.headtab {
+		background: #000;
+		color: #fff;
+	}
+	.btn-default{
+		background: gray;
+		color: #fff;
+	}
+
+</style>
+<a align="center" class="btn btn-default"  href="#"><span class="glyphicon glyphicon-plus"></span> Nuevo Producto</a>
+<br><br>
+
+<div class="table-responsive"> 
+	<table class="table table-bordered table-hover">
+	    <thead class="headtab">
+	        <tr>
+	            <th>Marca</th>
+	            <th>Modelo</th>
+	            <th>Precio</th>
+	            <th>Existencia</th>
+	            <th>Opcones</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+		    {% for post in posts %}
+		        <tr>
+		            <td>{{ post.marca }}</td>
+		            <td>{{ post.modelo }}</td>
+		            <td>Q. {{ post.precio }}</td>
+		            <td>{{ post.existencia }}</td>
+		            <td align="center">
+		            <a class="btn" href="{% url 'post_editar' pk=post.pk%}"><span class="glyphicon glyphicon-refresh"></span></a>
+		            <a class="btn" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+		            </td>
+		        </tr>
+		        
+		    {% endfor %}
+	    </tbody>
+	</table>
+</div>
+</tr>{% endblock %}

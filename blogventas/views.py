@@ -65,7 +65,7 @@ def cerrar_sesion(request):
 #Nuevo Producto
 def nuevo_producto(request):
     if request.method == "POST":
-        form = ProductoN(request.POST)
+        form = ProductoN(request.POST, request.FILES or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
@@ -73,6 +73,28 @@ def nuevo_producto(request):
     else:
         form = ProductoN()
     return render(request,'blogventas/nuevo_producto.html', {'form' : form})
+
+#editar producto
+def post_edit(request, pk):
+    post = get_object_or_404(Producto, pk=pk)
+    if request.method == "POST":
+        form = ProductoN(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('blogventas.views.post_detail', pk=post.pk)
+    else:
+        form = ProductoN(instance=post)
+    return render(request, 'blogventas/post_edit.html', {'form': form})
+
+#eliminar producto
+def del_product(request, pk=None):
+    instance = get_object_or_404(Producto, pk=pk)
+    instance.delete()
+    redirect('blogventas.views.lista_producto')
+    return render(request, 'blogventas/producto.html')
+     #return HttpResponseRedirect('/lista/productos')
+
 
 def nueva_marca(request):
     if request.method == "POST":
@@ -83,7 +105,6 @@ def nueva_marca(request):
     else:
         formM = frmMarca()
     return render(request,'blogventas/nuevo_producto.html', {'formM' : formM})
-
 
 
 
@@ -105,15 +126,4 @@ def post_detail (request, pk):
     post = get_object_or_404(Producto, pk=pk)
     return render(request, 'blogventas/post_detail.html', {'post': post})
 
-#editar compu
-def post_edit(request, pk):
-    post = get_object_or_404(Producto, pk=pk)
-    if request.method == "POST":
-        form = ProductoN(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-            return redirect('blogventas.views.post_detail', pk=post.pk)
-    else:
-        form = ProductoN(instance=post)
-    return render(request, 'blogventas/post_edit.html', {'form': form})
+

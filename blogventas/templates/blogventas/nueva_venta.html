@@ -1,0 +1,260 @@
+{% extends 'blogventas/base2.html' %}
+{% block titulo %}
+<title>Nuevo Venta</title>
+{% endblock %}
+{% block titulopagina %}
+<style type="text/css">
+  .encform{
+   border-radius: 8px;
+   background: #000;
+   color: #ffffff;
+   padding-top:10px;
+   padding-right:10px;
+   padding-right: 10px;
+   text-align: center;
+   font-family: 'Kaushan Script', cursive;
+ }
+</style>
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+    <h2 class="section-title encform">Venta</h2>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="row">
+
+  <div class="col-md-3">
+    {% if user.is_authenticated %}
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger alert-dismissable">
+          <i class="fa fa-info"></i>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <b>Alert!</b> {{ message }}
+          </div>
+
+      {% endfor %}
+      {% endif %}{% endif %}
+  </div>
+  <div class="col-md-6">
+  <section class="content invoice">
+<div class="row invoice-info">
+<div class="col-sm-6 invoice-col">
+                  <div class="row">
+                    <b>Factura</b> <br/>
+
+                   
+                    No. Factura:<input name="p-num" id="p-num" placeholder="Numero" type="text" autofocus required="true">
+                    <br/>
+                    <b>Fecha de compra:</b> {% now "d/m/Y" %}<br/><br/>
+                  </div>
+                  
+                    <strong>Cliente</strong>
+                    
+                      <!-- Modal -->
+                    <div class="modal fade" id="buscarClienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Cancelar</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Buscar Cliente</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <input name="cliente" id="cliente-id" class="form-control" placeholder="Ingrese numero de dni" type="text">
+                                        <span class="input-group-btn">
+                                            <button name="seach" id="c-buscar" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                    <div id="cliente-resultado"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="c-seleccionar" disabled>
+                                        Seleccionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button data-toggle="modal" data-target="#buscarClienteModal">
+                        <i class="fa fa-search"></i>
+                    </button>
+                   
+                    <br>
+                    NIT: <span id="c-nit"></span><br/>                    
+                    Nombres: <span id="c-nombre"></span><br/>
+                    Apellidos: <span id="c-apellido"></span><br/>
+                    Direccion: <span id="c-direccion"></span><br/>
+                </div><!-- /.col -->
+
+  <div class="col-sm-3 invoice-col">
+                    <strong>Despachador</strong><br>
+                    Apellido: {{user.last_name}}<br>
+                    Nombre: {{user.first_name}}<br>
+                    
+                </div><!-- /.col -->
+
+
+              </div>
+<div class="row">
+<div class="col-sm-12 invoice-col">
+<strong>Detalle</strong>
+
+<!-- Table row -->
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-striped" id="tb-detalle">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio (Q.)</th>
+                                
+                            </tr>                                    
+                        </thead>
+                        <tbody>
+                        <tr>
+                                <th><label id="pk">{{  post.pk}}</label></th>
+                                <th><label id="model">{{  post.modelo}}</label></th>
+                                <th><input type="text" name="cant" id="cant" value="0" maxlength="3" onkeyup="calc()" size="3"></th>
+                                <th><input type="text" id="precio" value="{{post.precio}}" disabled="true"></th>
+                                
+                            </tr> 
+                        </tbody>
+                    </table>                            
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-xs-4">
+                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                        Verifique bien los datos antes de efectuar la conpra.
+                    </p>
+                </div><!-- /.col -->
+                <div class="col-xs-8">
+                    <p class="lead">Totales de la compra</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th style="width:50%">Subtotal: Q.</th>
+                                <td align="center"> <label id='sum-subtotal'>.00</label></td>
+                            </tr>
+                            <tr>
+                                <th>Total: Q.</th>
+                                <td align="center"><label id='sum-total'>.00</label></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+<br>
+
+
+</div>
+  
+</div>
+
+<!--<form method="POST" class="post-form">{% csrf_token %}
+{{form.as_p}}
+<button type="submit" class="btn">Guardar</button>
+</form>-->
+  <!-- this row will not appear when printing -->
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <form action="/Generar/Factura/{{post.pk}}/" method="post" onsubmit="onEnviar()">
+                        {% csrf_token %}
+                        <input id="proceso" name="proceso" type="hidden" />
+                        <button class="btn btn-success type="submit" pull-right" id="comprar"><i class="fa fa-credit-card"></i> Realizar Venta</button>
+                    </form>
+                    <button class="btn btn-primary pull-right"
+                        style="margin-right: 5px;" onclick="window.print();"><i
+                            class="fa fa-download"></i>Imprimir </button>
+                </div>
+            </div>
+
+</section>
+
+</div>
+{% endblock %}
+{% block js %}
+
+                           
+<script>
+        var proceso = new Object();
+        var cliente = new Object();
+
+        $(document).ready(function(){
+            $("#c-buscar").click(function () {          
+                    
+                var id = $('#cliente-id').val();
+                $.ajax({
+                    data: {'nit':id},
+                    url: '/factura/buscar_cliente',
+                    type: 'get',
+                    success: function(data){
+                        console.log(id);
+                        var html = ""
+                        if(data.length != 0){
+                            for (var i = 0; i < data.length; i++) {
+                                html += '<strong>Cliente</strong><br>';
+                                html += 'numeroid: ' + data[i].pk + '<br>';
+                                html += 'nombres: ' + data[i].fields.nombres + '<br>';
+                                html += 'apellidos: ' + data[i].fields.apellidos + '<br>';
+                                html += 'direccion: ' + data[i].fields.direccion + '<br>';
+                                html += 'nit: ' + data[i].fields.nit + '<br>';
+
+                                cliente.pk = data[i].pk;
+                                cliente.nit = data[i].fields.nit;
+                                cliente.nombres = data[i].fields.nombres;
+                                cliente.apellidos = data[i].fields.apellidos;
+                                cliente.direccion = data[i].fields.direccion;
+                            }  
+                            $("#c-seleccionar").attr("disabled", false);
+                        }else{
+                            html += '<strong>No existe un cliente con ese numero de identificación</strong><br><button class="btn btn-primary" style="margin-right: 5px;"> Crear Usuario</button>';
+                            $("#c-seleccionar").attr("disabled", true);
+                        }
+                        $('#cliente-resultado').html(html); 
+                    }
+                });            
+            });
+            $("#c-seleccionar").click(function () {
+                //console.log(cliente.numIdentificacion);
+                proceso.clienProv = cliente.pk;
+                $("#c-nit").text(cliente.nit);
+                $("#c-nombre").text(cliente.nombres);
+                $("#c-apellido").text(cliente.apellidos);
+                $("#c-direccion").text(cliente.direccion);
+                $('#buscarClienteModal').modal('hide');
+            });
+            });  
+        function onEnviar(){
+            proceso.numero = $('#p-num').val();
+            console.log(JSON.stringify(proceso));
+           document.getElementById("proceso").value=JSON.stringify(proceso);
+        }
+        function calc() {
+          var pres = parseFloat($('#precio').val().toString());
+          var cant = $('#cant').val();
+          var sub = parseFloat(pres * cant);
+          proceso.idprod= {{post.pk}};
+          proceso.cantidad= cant;
+          proceso.subtotal= sub;
+          proceso.total= sub;
+          $('#sum-subtotal').text((sub.toString()));
+          $('#sum-total').text((sub.toString()));
+        }
+</script>
+ {% endblock %}

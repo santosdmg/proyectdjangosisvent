@@ -1,5 +1,5 @@
 from django import forms
-from .models import Producto, Marca
+from .models import Producto, Marca, Venta
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.forms import UserCreationForm
 
@@ -34,3 +34,13 @@ class frmMarca(forms.ModelForm):
     class Meta:
         model = Marca
         fields= ('descripcion',)
+
+class frmVenta(forms.ModelForm):
+    class Meta:
+        model = Venta
+        fields = ('cliente','nro_factura', 'detalle_venta', 'total'  )
+    def __init__ (self, *args, **kwargs):
+        super (frmVenta, self).__init__(*args, **kwargs)
+        self.fields['detalle_venta'].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields['detalle_venta'].help_text = "Seleccione los productos a comprar"
+        self.fields['detalle_venta'].queryset = Producto.objects.all()

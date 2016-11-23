@@ -52,7 +52,7 @@
         <!--{{ form.as_p}}-->
         <div class="form-group">
               <label for="ejemplo_email_1">Marca</label><br/>
-              {{ form.marca}} <a class="btnmas" href="#"><span class="glyphicon glyphicon-plus">  </span></a>
+              {{ form.marca}} <a class="btnmas" href="javascript:ventanaSecundaria('{%url 'marcaN'%}')"><span class="glyphicon glyphicon-plus">  </span></a>
             </div>
             <div class="form-group">
               <label for="ejemplo_email_1">Modelo</label><br/>
@@ -81,5 +81,11 @@
   </div>
 </div>
 
+
+<script language=javascript> 
+function ventanaSecundaria (URL){ 
+   window.open(URL,"ventana1","width=500,height=300,scrollbars=NO") 
+} 
+</script> 
 
 {% endblock %}

@@ -14,7 +14,7 @@
     <div class="col-md-5">
       <img src='{{post.imagen.url}}' class="img-responsive" style='width:362px;height:300px'/>
       <div class="product-carousel-price">
-                          <ins>Q. {{ post.precio}}<a class="btn" style="font-size: 25px;" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                          <ins>Q. {{ post.precio}}
                             {% if user.is_authenticated %}
                              <a class="btn" style="font-size: 25px;" href="{%url 'post_editar' pk=post.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
                             {% endif %}

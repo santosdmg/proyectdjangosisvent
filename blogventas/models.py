@@ -19,6 +19,7 @@ class Cliente(models.Model):
     nombres = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=30)
     nit = models.CharField(max_length=11)
+    direccion = models.CharField(max_length=11, null = True, blank = True)
     def __str__(self):
         return '%s' %(self.nombres+' '+self.apellidos)
 
@@ -47,10 +48,10 @@ class Venta(models.Model):
 class Detalle_venta(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.PROTECT, related_name='fk_detalleventa_producto')
     venta = models.ForeignKey(Venta, on_delete=models.PROTECT, related_name='fk_detalleventa_venta')
-    cantidad = models.IntegerField()
-    precio = models.DecimalField(max_digits=18, decimal_places=2)
+    cantidad = models.IntegerField( null=True, blank=True)
+    subtotal = models.DecimalField(max_digits=18, decimal_places=2, null=True, blank=True)
     def __str__(self):
-        return '%s' %(self.precio)
+        return '%s' %(self.cantidad)
 
 class Detalle_ventaInLine(admin.TabularInline):
     model = Detalle_venta

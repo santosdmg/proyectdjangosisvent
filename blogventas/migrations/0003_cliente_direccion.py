@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogventas', '0001_initial'),
+        ('blogventas', '0002_venta_detalle_venta'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='producto',
-            name='existencia',
-            field=models.IntegerField(null=True, blank=True),
+            model_name='cliente',
+            name='direccion',
+            field=models.CharField(null=True, blank=True, max_length=11),
         ),
     ]
